@@ -93,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(CowpayConstantKeys.CustomerName, "John Smith")
         intent.putExtra(CowpayConstantKeys.CustomerMobile, "01234567890")
         intent.putExtra(CowpayConstantKeys.CustomerEmail, "customer@customer.com")
+        intent.putExtra(CowpayConstantKeys.Description, "example description")
         //user id
         intent.putExtra(CowpayConstantKeys.CustomerMerchantProfileId, "15")
         startActivityForResult(intent, CowpayConstantKeys.PaymentMethodsActivityRequestCode)
@@ -134,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(CowpayConstantKeys.CustomerName, "John Smith")
         intent.putExtra(CowpayConstantKeys.CustomerMobile, "+201096545211")
         intent.putExtra(CowpayConstantKeys.CustomerEmail, "customer@customer.com")
+        intent.putExtra(CowpayConstantKeys.Description, "example description")
         //user id
         intent.putExtra(CowpayConstantKeys.CustomerMerchantProfileId, "15")
         startActivityForResult(intent, CowpayConstantKeys.PaymentMethodsActivityRequestCode)
@@ -172,6 +174,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(CowpayConstantKeys.CustomerName, "John Smith")
         intent.putExtra(CowpayConstantKeys.CustomerMobile, "01234567890")
         intent.putExtra(CowpayConstantKeys.CustomerEmail, "customer@customer.com")
+        intent.putExtra(CowpayConstantKeys.Description, "example description")
         //user id
         intent.putExtra(CowpayConstantKeys.CustomerMerchantProfileId, "15")
         startActivityForResult(intent, CowpayConstantKeys.PaymentMethodsActivityRequestCode)
@@ -189,7 +192,7 @@ class MainActivity : AppCompatActivity() {
         //CowpayConstantKeys.Production or CowpayConstantKeys.SandBox
         intent.putExtra(CowpayConstantKeys.PaymentEnvironment, paymentEnvironment)
         //set locale language
-        var locale = CowpayConstantKeys.ENGLISH
+        var locale = CowpayConstantKeys.ARABIC
         intent.putExtra(CowpayConstantKeys.Language, locale)
         CowpayConstantKeys.LanguageCode = locale
         //merchant data
@@ -206,6 +209,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(CowpayConstantKeys.CustomerName, "John Smith")
         intent.putExtra(CowpayConstantKeys.CustomerMobile, "01234567890")
         intent.putExtra(CowpayConstantKeys.CustomerEmail, "customer@customer.com")
+        intent.putExtra(CowpayConstantKeys.Description, "example description")
         //user id
         intent.putExtra(CowpayConstantKeys.CustomerMerchantProfileId, "15")
         startActivityForResult(intent, CowpayConstantKeys.PaymentMethodsActivityRequestCode)
@@ -215,17 +219,18 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CowpayConstantKeys.PaymentMethodsActivityRequestCode && data != null && resultCode == Activity.RESULT_OK) {
             var responseCode = data.extras!!.getInt(CowpayConstantKeys.ResponseCode, 0)
+            var paymentMethod = data.extras!!.getString(CowpayConstantKeys.PaymentMethod)
             if (responseCode == CowpayConstantKeys.ErrorCode) {
                 var responseMSG = data.extras!!.getString(CowpayConstantKeys.ResponseMessage)
-                Toast.makeText(this@MainActivity, responseMSG, Toast.LENGTH_LONG)
+                Toast.makeText(this@MainActivity, "$responseMSG $paymentMethod", Toast.LENGTH_LONG)
                     .show()
             } else if (responseCode == CowpayConstantKeys.SuccessCode) {
                 var responseMSG = data.extras!!.getString(CowpayConstantKeys.ResponseMessage)
-                var PaymentGatewayReferenceId =
+                var paymentGatewayReferenceId =
                     data.extras!!.getString(CowpayConstantKeys.PaymentGatewayReferenceId)
                 Toast.makeText(
                     this@MainActivity,
-                    responseMSG.plus(" $PaymentGatewayReferenceId"),
+                    responseMSG.plus(" $paymentMethod $paymentGatewayReferenceId"),
                     Toast.LENGTH_LONG
                 )
                     .show()
